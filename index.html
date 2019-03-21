@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>D1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <script src="game/utils.js"></script>
+    <script src="game/xia_game.js"></script>
+    <script src="game/xia_scene.js"></script>
+    <script src="game/xia_image.js"></script>
+    <script src="game/xia_label.js"></script>
+    <script src="game/xia_particle_system.js"></script>
+    <script src="game/xia_animation.js"></script>
+    <script src="game/xia_nes_sprite.js"></script>
+    <script src="game/Bird.js"></script>
+    <script src="game/xia_tile_map.js"></script>
+
+    <script src="scene/main/paddle.js"></script>
+    <script src="scene/main/ball.js"></script>
+    <script src="scene/main/block.js"></script>
+    <script src="scene/main/scene.js"></script>
+
+    <script src="scene/title/scene_title.js"></script>
+    <script src="scene/end/scene_end.js"></script>
+    <script src="scene/editor/scene_editor.js"></script>
+
+    <script src="level.js"></script>
+    <script src="config.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #id-canvas{
+            border:1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="id-canvas" width="600" height="400"></canvas>
+    <!-- <input type="range" class="slide" value="30"> -->
+    <!-- <div class="game-control">  
+        <input type="range" value="" max="15" min="1"
+            data-value="config.player_speed" 
+            class="slide-input"
+        >
+        玩家速度：<label class="slide-label"></label>
+    </div> -->
+    <script src="main.js"></script>
+    <script>
+        var es = el => document.querySelectorAll(el)
+
+        var bindAll = function(el, event, callback) {
+            var l = es(el)
+            for (let i = 0; i < l.length; i++) {
+                const e = l[i]
+                e.addEventListener(event, function(event) {
+                    callback(event)
+                })
+                
+            }
+        }
+
+        var templateControl = function(key, item) {
+            var t = `
+                <div class="input-wrap">
+                    <input type="range" value="" max="300" min="100"
+                        data-value="${item.value}" 
+                        data-name="${key}"
+                        class="slide-input"
+                    >
+                    ${item.comments}<label class="slide-label"></label>
+                </div>    
+            `
+            return t
+        }
+
+        var insertControls = function() {
+        //     var keys = Object.keys(config)
+        //     // log('keys', keys)
+        //     for (var key of keys) {
+        //         var div = es('.game-control')[0]
+        //         var item = config[key]
+        //         var html = templateControl(key, item)
+        //         // log('html', html, div)
+        //         div.insertAdjacentHTML('beforeend', html)
+        //     }
+        }
+
+        var bindEvents = function() {
+            bindAll('.slide-input', 'input', function(event) {
+                var target = event.target
+                var bindVar = target.dataset.value
+                var v = target.value
+                log('bindvar', bindVar, target)
+                target.setAttribute('data-value', v)
+                var label = target.closest('div').querySelector('.slide-label')
+                config[target.dataset.name].value = v
+                // log('config', label,label.innerText)
+                // eval(bindVar + '.value =' + v)
+                label.innerText = v
+            })
+        }
+
+        // bindAll('.slide-input', 'input', function(event) {
+        //     var target = event.target
+        //     var bindVar = target.dataset.value
+        //     var v = target.value
+        //     eval(bindVar + '=' + v)
+        //     target.closest('div').querySelector('.slide-label').innerText = v
+        // })
+
+        var main = function() {
+            insertControls()
+            bindEvents()
+        }
+        main()
+    </script>
+</body>
+</html>
