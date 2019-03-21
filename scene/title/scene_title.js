@@ -2,37 +2,49 @@ class SceneTitle extends XiaScene {
     constructor(game) {
         super(game)
         this.setup()
-        this.setupInputs()
     }
     setup() {
-        var game = this.game
-        var label = XiaLabel.new(this.game, 'hello')
+        this.foes = []
+        this.towers = []
+        this.setupInputs()
+        this.setupBg()
+        this.setupGun()
+        this.setupFoe()
+        this.setupTower()
+    }
+    setupBg() {
+        let game = this.game
+        let label = XiaLabel.new(this.game, 'hello')
         this.addElement(label)
         this.bg = XiaImage.new(game, 'bg')
         this.bg.y = 300
         this.bg.w = 400
         this.bg.h = this.bg.h * 2
         this.addElement(this.bg)
-        // this.addElement(this.pipe)
-        this.land = XiaImage.new(game, 'land')
-        // this.addElement(this.land)
-        this.lands = []
-        this.skipCount = 5
-        for (let i = 0; i < 2; i++) {
-            var l = XiaImage.new(game, 'land')
-            l.x = l.w * i
-            l.y = 400
-            this.addElement(l)
-            this.lands.push(l)
-        }
-        // this.mario = XiaNesSprite.new(game)
-        // this.mario.x = 100
-        // this.mario.y = 306
-        // this.addElement(this.mario)
+    }
+    setupGun() {
+        let game = this.game
         this.gun = XiaImage.new(game, 't1')
         this.gun.x = 500
         this.gun.y = 300
         this.addElement(this.gun)
+    }
+    setupTower() {
+        let game = this.game
+        let t1 = Tower.new(game)
+        t1.x = 300
+        t1.y = 250
+        this.addElement(t1)
+        this.towers.push(t1)
+    }
+    setupFoe() {
+        let game = this.game
+        this.foe1 = Foe.new(game, 't2')
+        this.addElement(this.foe1)
+        this.foe2 = Foe.new(game, 't2')
+        this.foe2.x = this.foe1.x - 35
+        this.addElement(this.foe2)
+        this.foes.push(this.foe1, this.foe2)
     }
     setupInputs() {
         this.game.registerMouse((event, status) => {
@@ -69,6 +81,15 @@ class SceneTitle extends XiaScene {
         //     l.x += offset
         //     l.y = 400
         //     this.lands.push(l)
+        // }
+        for(let t of this.towers) {
+            if (t.target == null) {
+                t.findTarget(this.foes)
+            }
+        }
+        // log('foes', this.foes)
+        // for(let f of this.foes) {
+        //     this.foes = this.foes.filter(f => !f.dead)
         // }
     }
     move(s, keyStatus) {

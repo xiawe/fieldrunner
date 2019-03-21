@@ -8,8 +8,8 @@ class XiaImage extends XiaScene {
         this.w = this.texture.width
         this.h = this.texture.height
     }
-    static new(game, name) {
-        var i = new this(game, name)
+    static new(...args) {
+        var i = new this(...args)
         return i
     }
     pointInGoal(x, y) {
@@ -24,5 +24,10 @@ class XiaImage extends XiaScene {
         var c = XiaImage.new(this.game, this.name)
         // log('clone c', c)
         return c
+    }
+    center() {
+        let x = this.x + this.w / 2
+        let y = this.y + this.h / 2
+        return XiaVector.new(x, y)
     }
 }
