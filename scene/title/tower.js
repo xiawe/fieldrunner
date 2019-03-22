@@ -8,7 +8,7 @@ class Tower extends XiaImage {
         this.attack = 1
         this.target = null
         this.range = 100
-        this._cooldown = 4
+        this._cooldown = 8
         this.attackCount = this._cooldown
     }
     update() {
@@ -18,19 +18,23 @@ class Tower extends XiaImage {
             this.fire(this.target)
             if (this.target.dead) {
                 this.target = null
-                this.angle = 0
+                // this.angle = 0
             }
         }
     }
     updateAngle(foe) {
         let dx = foe.x + foe.w / 2 - (this.x + this.w / 2)
         let dy = foe.y + foe.h / 2 - (this.y + this.h / 2)
-        // this.angle = 10
-        // this.angle = -(90 + angleByVector(dx, dy)) * 10
         this.angle = - angleByVector(dx, dy)
-        log('tower angle', angleByVector(dx, dy), this.angle)
+        // log('tower angle', angleByVector(dx, dy), this.angle)
     }
     fire(foe) {
+        if (this.attackCount!= 0) {
+            this.attackCount--
+            return false
+        } else {
+            this.attackCount = this._cooldown
+        }
         foe.hp -= this.attack
         if (foe.hp <= 0) {
             foe.goDie()
@@ -47,13 +51,9 @@ class Tower extends XiaImage {
     canAttack(f) {
         let enemyExist = f != null && !f.dead
         if (!enemyExist) {
+            this.angle = 0
+            this.target = null
             return false
-        }
-        if (this.attackCount!= 0) {
-            this.attackCount--
-            return false
-        } else {
-            this.attackCount = this._cooldown
         }
         let enemyInRange = this.center().distance(f.center()) <= this.range
         return enemyInRange

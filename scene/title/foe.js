@@ -8,7 +8,7 @@ class Foe extends XiaImage {
         this.x = 0
         this.y = 200
         this.destination = 500
-        this.speed = 1
+        this.speed = 3
         this.maxHp = 15
         this.hp = this.maxHp
         this.dead = false

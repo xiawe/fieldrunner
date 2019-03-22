@@ -29,13 +29,19 @@ class SceneTitle extends XiaScene {
         this.gun.y = 300
         this.addElement(this.gun)
     }
-    setupTower() {
+    addTower(x, y) {
+        let x1 = Math.floor(x / 50) * 50
+        let y1 = Math.floor(y / 50) * 50
         let game = this.game
         let t1 = Tower.new(game)
-        t1.x = 150
-        t1.y = 250
+        t1.x = x1
+        t1.y = y1
         this.addElement(t1)
         this.towers.push(t1)
+    }
+    setupTower() {
+        this.addTower(150, 250)
+        this.addTower(150, 150)
     }
     setupFoe() {
         let game = this.game
@@ -55,15 +61,20 @@ class SceneTitle extends XiaScene {
                 let hasPoint= this.gun.pointInGoal(x, y)
                 if (hasPoint) {
                     draging = true
+                    log('start')
+                    // log('gun', this.gun)
                     this.tower = this.gun.clone()
                     this.addElement(this.tower)
+                    log()
                 }
             } else if (status == 'drag') {
+                // log('tower', this.tower, this.tower.x, this.tower.y)
                 this.tower.x = x
                 this.tower.y = y
             } else if (status == 'mouseup') {
                 draging = false 
                 this.removeElement(this.tower)
+                this.addTower(x, y)
             }
         })
     }
