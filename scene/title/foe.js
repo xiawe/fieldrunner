@@ -8,8 +8,9 @@ class Foe extends XiaImage {
         this.x = 0
         this.y = 200
         this.destination = 500
-        this.speed = 5
-        this.hp = 3
+        this.speed = 1
+        this.maxHp = 15
+        this.hp = this.maxHp
         this.dead = false
     }
     update() {
@@ -18,12 +19,18 @@ class Foe extends XiaImage {
             log('敌人到达')
         }
     }
-    beAttack(ap) {
-        // ap 攻击力
-        this.hp -= ap
-        if (this.hp <= 0) {
-            this.goDie()
-        }
+    drawLifebar() {
+        let context = this.game.context
+        let w = 31
+        this.game.context.fillStyle  = 'red'
+        context.fillRect(this.x, this.y - 10, 31, 5)
+        let i = (this.hp / this.maxHp) * w
+        this.game.context.fillStyle  = 'green'
+        context.fillRect(this.x, this.y - 10, i, 5)
+    }
+    draw() {
+        super.draw()
+        this.drawLifebar()
     }
     goDie() {
         this.dead = true

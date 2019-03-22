@@ -16,11 +16,11 @@ class SceneTitle extends XiaScene {
         let game = this.game
         let label = XiaLabel.new(this.game, 'hello')
         this.addElement(label)
-        this.bg = XiaImage.new(game, 'bg')
-        this.bg.y = 300
-        this.bg.w = 400
-        this.bg.h = this.bg.h * 2
-        this.addElement(this.bg)
+        // this.bg = XiaImage.new(game, 'bg')
+        // this.bg.y = 300
+        // this.bg.w = 400
+        // this.bg.h = this.bg.h * 2
+        // this.addElement(this.bg)
     }
     setupGun() {
         let game = this.game
@@ -32,7 +32,7 @@ class SceneTitle extends XiaScene {
     setupTower() {
         let game = this.game
         let t1 = Tower.new(game)
-        t1.x = 300
+        t1.x = 150
         t1.y = 250
         this.addElement(t1)
         this.towers.push(t1)
