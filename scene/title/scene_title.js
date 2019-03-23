@@ -45,12 +45,18 @@ class SceneTitle extends XiaScene {
     }
     setupFoe() {
         let game = this.game
-        this.foe1 = Foe.new(game, 't2')
-        this.addElement(this.foe1)
-        this.foe2 = Foe.new(game, 't2')
-        this.foe2.x = this.foe1.x - 35
-        this.addElement(this.foe2)
-        this.foes.push(this.foe1, this.foe2)
+        // this.foe1 = Foe.new(game, 't4')
+        // this.addElement(this.foe1)
+        // this.foe2 = Foe.new(game, 't4')
+        // this.foe2.x = this.foe1.x - 35
+        // this.addElement(this.foe2)
+        // this.foes.push(this.foe1, this.foe2)
+        for (let i = 0; i < 5; i++) {
+            let foe = Foe.new(game, 't4')
+            foe.x = foe.x - 35 * i
+            this.addElement(foe)
+            this.foes.push(foe)
+        }
     }
     setupInputs() {
         this.game.registerMouse((event, status) => {
